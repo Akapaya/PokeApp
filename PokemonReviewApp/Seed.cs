@@ -39,7 +39,7 @@ namespace PokemonReviewApp
                         Owner = new Owner()
                         {
                             Name = "Jack",
-                            //LastName = "London",
+                            LastName = "London",
                             Gym = "Brocks Gym",
                             Country = new Country()
                             {
@@ -70,7 +70,7 @@ namespace PokemonReviewApp
                         Owner = new Owner()
                         {
                             Name = "Harry",
-                            //LastName = "Potter",
+                            LastName = "Potter",
                             Gym = "Mistys Gym",
                             Country = new Country()
                             {
@@ -101,7 +101,7 @@ namespace PokemonReviewApp
                         Owner = new Owner()
                         {
                             Name = "Ash",
-                            //LastName = "Ketchum",
+                            LastName = "Ketchum",
                             Gym = "Ashs Gym",
                             Country = new Country()
                             {

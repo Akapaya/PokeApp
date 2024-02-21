@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2kaP+wkaelgpUtHfUedxSneYCIoQVHDs/cheySk4Y/X+5EH7NhPir7Y+gLbC+xUfkcqvz4RNjut7BVkO1nFZBg==",
+  "dgSpecHash": "TI6Kl4daKeVUX9aKzm7sf4fJw6hK4uFdOPrDwGPIvuPN1jLX7Xyg5YFhheFd+SNFJdwieOOS0vws/PxwIZLa+g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Grego\\source\\repos\\PokemonReviewApp\\PokemonReviewApp\\PokemonReviewApp.csproj",
+  "projectFilePath": "C:\\Projects\\PokeApp\\PokemonReviewApp\\PokemonReviewApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Grego\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Grego\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
