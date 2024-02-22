@@ -64,7 +64,7 @@ namespace PokemonReviewApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Gym")
@@ -200,9 +200,7 @@ namespace PokemonReviewApp.Migrations
                 {
                     b.HasOne("PokemonReviewApp.Models.Country", "Country")
                         .WithMany("Owners")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

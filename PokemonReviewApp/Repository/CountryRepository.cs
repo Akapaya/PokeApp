@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PokemonReviewApp.Data;
 using PokemonReviewApp.Interface;
 using PokemonReviewApp.Models;
@@ -28,6 +29,13 @@ namespace PokemonReviewApp.Repository
             return Save();
         }
 
+        public bool DeleteCountry(Country country)
+        {
+            _context.Remove(country);
+
+            return Save();
+        }
+
         public ICollection<Country> GetCountries()
         {
             return _context.Countries.ToList();
@@ -47,6 +55,24 @@ namespace PokemonReviewApp.Repository
         {
             return _context.Owners.Where(c => c.Country.Id == countryId).ToList();
         }
+
+        public ICollection<Owner> RemoveOwnersFromACountry(int countryId)
+        {
+            var ownersToRemove = _context.Owners
+                .Include(o => o.Country)
+                .Where(p => p.Country != null && p.Country.Id == countryId)
+                .ToList();
+
+            foreach (var owner in ownersToRemove)
+            {
+                owner.Country = null;
+            }
+
+            GetCountry(countryId).Owners.Clear();
+
+            return ownersToRemove;
+        }
+
 
         public bool Save()
         {

@@ -160,5 +160,36 @@ namespace PokemonReviewApp.Controllers
 
             return Ok("Successfully");
         }
+
+        [HttpDelete("Remove/{countryId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteCategory(int countryId)
+        {
+            if (!_countryRepository.CountryExists(countryId))
+            {
+                return NotFound();
+            }
+
+            var category = _countryRepository.GetCountry(countryId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var removedOwners = _countryRepository.RemoveOwnersFromACountry(countryId);
+
+            if (!_countryRepository.DeleteCountry(category))
+            {
+                ModelState.AddModelError("", "Something went wrong while Deleting");
+                return StatusCode(500, ModelState);
+            }
+
+            var successMessage = $"Country successfull removed. {removedOwners.Count} Owners are dissociated";
+
+            return Ok(successMessage);
+        }
     }
 }

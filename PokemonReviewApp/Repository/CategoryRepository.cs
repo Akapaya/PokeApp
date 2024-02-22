@@ -71,7 +71,6 @@ namespace PokemonReviewApp.Repository
             return pokemonsToRemove;
         }
 
-
         public bool Save()
         {
             var saved = _context.SaveChanges();
