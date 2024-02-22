@@ -1,4 +1,5 @@
 ﻿using PokemonReviewApp.Data;
+using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interface;
 using PokemonReviewApp.Models;
 using System.Xml.Linq;
@@ -40,6 +41,12 @@ namespace PokemonReviewApp.Repository
             return Save();
         }
 
+        public bool DeletePokemon(Pokemon pokemon)
+        {
+            _context.Remove(pokemon);
+            return Save();
+        }
+
         public Pokemon GetPokemon(int id)
         {
             return _context.Pokemons.Where(p => p.Id == id).FirstOrDefault();
@@ -70,6 +77,12 @@ namespace PokemonReviewApp.Repository
         public ICollection<Pokemon> GetPokemons()
         {
             return _context.Pokemons.OrderBy(p => p.Id).ToList();
+        }
+
+        public Pokemon GetPokemonTrimToUpper(PokemonDto pokemonCreate)
+        {
+            return GetPokemons().Where(c => c.Name.Trim().ToUpper() == pokemonCreate.Name.TrimEnd().ToUpper())
+                .FirstOrDefault();
         }
 
         public bool PokemonExists(int pokeId)
