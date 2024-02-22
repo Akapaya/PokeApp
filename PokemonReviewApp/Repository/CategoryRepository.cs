@@ -4,7 +4,7 @@ using PokemonReviewApp.Models;
 
 namespace PokemonReviewApp.Repository
 {
-    public class CategoryRepository : IcategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly DataContext _context;
 
@@ -16,6 +16,13 @@ namespace PokemonReviewApp.Repository
         public bool CategoryExists(int categoryId)
         {
             return _context.Categories.Any(c => c.Id == categoryId);
+        }
+
+        public bool CreateCategory(Category category)
+        {
+            _context.Add(category);
+
+            return Save();
         }
 
         public ICollection<Category> GetCategories()
@@ -31,6 +38,13 @@ namespace PokemonReviewApp.Repository
         public ICollection<Pokemon> GetPokemonsByCategory(int categoryId)
         {
             return _context.PokemonCategories.Where(c => c.CategoryId == categoryId).Select(c=>c.Pokemon).ToList();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+
+            return saved > 0 ? true : false;
         }
     }
 }
