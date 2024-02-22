@@ -9,6 +9,7 @@ namespace PokemonReviewApp.Interface
         ICollection<Review> GetReviewsOfAPokemon(int pokeId);
         bool ReviewExists(int reviewId);
         bool CreateReview(int reviewerId, int pokemonId, Review review);
+        bool UpdateReview(Review review);
         bool Save();
     }
 }
