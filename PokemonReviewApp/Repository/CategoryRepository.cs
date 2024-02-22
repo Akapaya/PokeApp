@@ -1,6 +1,7 @@
 ﻿using PokemonReviewApp.Data;
 using PokemonReviewApp.Interface;
 using PokemonReviewApp.Models;
+using System.Linq;
 
 namespace PokemonReviewApp.Repository
 {
@@ -25,6 +26,13 @@ namespace PokemonReviewApp.Repository
             return Save();
         }
 
+        public bool DeleteCategory(Category category)
+        {
+            _context.Remove(category);
+
+            return Save();
+        }
+
         public ICollection<Category> GetCategories()
         {
             return _context.Categories.ToList();
@@ -39,6 +47,30 @@ namespace PokemonReviewApp.Repository
         {
             return _context.PokemonCategories.Where(c => c.CategoryId == categoryId).Select(c=>c.Pokemon).ToList();
         }
+
+        public ICollection<Pokemon> RemovePokemonsByCategory(int categoryId)
+        {
+            var pokemonsToRemove = _context.Pokemons
+                .Where(p => p.Categories != null && p.Categories.Any(c => c.CategoryId == categoryId))
+                .ToList();
+
+            foreach (var pokemon in pokemonsToRemove)
+            {
+                if (pokemon.Categories != null)
+                {
+                    var categoryToRemove = pokemon.Categories.FirstOrDefault(c => c.CategoryId == categoryId);
+                    if (categoryToRemove != null)
+                    {
+                        pokemon.Categories.Remove(categoryToRemove);
+                    }
+                }
+            }
+
+            Save();
+
+            return pokemonsToRemove;
+        }
+
 
         public bool Save()
         {

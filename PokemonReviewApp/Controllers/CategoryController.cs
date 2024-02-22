@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interface;
 using PokemonReviewApp.Models;
+using System.Data;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -142,6 +143,37 @@ namespace PokemonReviewApp.Controllers
             }
 
             return Ok("Successfully");
+        }
+
+        [HttpDelete("Remove/{categoryId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            if (!_categoryRepository.CategoryExists(categoryId))
+            {
+                return NotFound();
+            }
+
+            var category = _categoryRepository.GetCategory(categoryId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var removedPokemons = _categoryRepository.RemovePokemonsByCategory(categoryId);
+
+            if (!_categoryRepository.DeleteCategory(category))
+            {
+                ModelState.AddModelError("", "Something went wrong while Deleting");
+                return StatusCode(500, ModelState);
+            }
+
+            var successMessage = $"Categoria excluída com sucesso. {removedPokemons.Count} Pokémons foram desassociados.";
+
+            return Ok(successMessage);
         }
     }
 }
